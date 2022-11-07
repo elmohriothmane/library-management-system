@@ -8,3 +8,4 @@ library-management-system
 2. Build the image and starting container up:
 
         docker-compose build
+3. Open http://localhost:8000/ in your browser.

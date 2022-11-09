@@ -1,0 +1,11 @@
+{% if livres %}
+    <h1>Liste de tous les livres de la librairie {{ library.label }}</h1>
+    <ul>
+    {% for livre in livres %}
+        <li><a href="/livres/{{ livre.id }}/">{{ livre.nom }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun livre trouvé.</p>
+{% endif %}
+<a href="/">Retour aux librairies</a>

@@ -1,0 +1,10 @@
+<h1>Livre "{{ livre.nom }}"</h1>
+
+<p>Auteur : {{ livre.auteur }}</p>
+<p>Jaquette : {{ livre.jaquette }}</p>
+<p>Editeur : {{ livre.editeur }}</p>
+<p>Collection : {{ livre.collection }}</p>
+<p>Genre : {{ livre.genre }}</p>
+<p>Disponibilité : {% if not livre.is_disponible %}Non disponible{% else %}Disponible. <a href="#">Emprunter</a>{% endif %}</p>
+
+<p>Retourner à la librairie <a href="{% url 'detail_library' livre.librairie.id %}">en cliquant ici</a>.</p>

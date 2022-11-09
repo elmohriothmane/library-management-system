@@ -1,10 +1,14 @@
-{% if librairies_list %}
-    <h1>Liste de toutes les librairies</h1>
-    <ul>
-    {% for library in librairies_list %}
-        <li><a href="{% url 'detail_library' library.id %}">{{ library.label }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucune librairie trouvée.</p>
-{% endif %}
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if librairies_list %}
+        <h1>Liste de toutes les librairies</h1>
+        <ul>
+            {% for library in librairies_list %}
+                <li><a href="{% url 'detail_library' library.id %}">{{ library.label }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune librairie trouvée.</p>
+    {% endif %}
+{% endblock %}

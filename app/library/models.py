@@ -60,3 +60,23 @@ class Livre(models.Model):
 
     def get_librairie(self):
         return self.librairie
+
+
+class Emprunt(models.Model):
+    date_emprunt = models.DateTimeField(auto_now_add=True)
+    date_retour = models.DateTimeField(auto_now_add=True, null=True)
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='livre_emprunte')
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='emprunts')
+
+    def __str__(self):
+        return self.livre.nom
+
+    def get_date_emprunt(self):
+        return self.date_emprunt
+
+    def get_date_retour(self):
+        return self.date_retour
+
+    def get_livre(self):
+        return self.livre
+

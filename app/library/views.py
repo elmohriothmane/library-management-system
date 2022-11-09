@@ -41,3 +41,14 @@ def detail_library_livres(request, library_id):
     }
     return render(request, 'library/livres.html', data)
 
+
+def emprunter_livre(request, livre_id):
+    livre = Livre.objects.get(pk=livre_id)
+    livre.set_is_disponible(False)
+    livre.save()
+    data = {
+        'livre': livre,
+        'success_msg': 'Vous avez bien emprunté le livre "' + livre.nom + '".',
+        'desc_msg': 'Vous avez 1 mois avant de devoir le rendre à la librairie "' + livre.librairie.label + '".',
+    }
+    return render(request, 'library/show_livre.html', data)

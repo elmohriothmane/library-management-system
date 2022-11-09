@@ -10,4 +10,5 @@ urlpatterns = [
     # ex : /libraries/5/
     path('libraries/<int:library_id>/', views.detail_library, name='detail_library'),
     path('libraries/<int:library_id>/livres/', views.detail_library_livres, name='detail_library_livres'),
+    path('livres/<int:livre_id>/emprunter', views.emprunter_livre, name='emprunter_livre'),
 ]

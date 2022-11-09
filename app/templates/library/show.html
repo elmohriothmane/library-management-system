@@ -1,9 +1,14 @@
-<h1>Librairie "{{ library.label }}"</h1>
+{% extends 'base.html' %}
 
-<p>Adresse : {{ library.adresse }}</p>
-<p>Ville : {{ library.ville }}</p>
-<p>Code postal : {{ library.code_postal }}</p>
-<p>Téléphone : 0{{ library.telephone }}</p>
+{% block content %}
+    <h1>Librairie "{{ library.label }}"</h1>
 
-<p>Voir les livres disponibles de cette librairie <a href="{% url 'detail_library_livres' library.id %}">en cliquant ici</a>.</p>
-<p>Retourner à la liste des librairies <a href="{% url 'index_libraries' %}">en cliquant ici</a>.</p>
+    <p>Adresse : {{ library.adresse }}</p>
+    <p>Ville : {{ library.ville }}</p>
+    <p>Code postal : {{ library.code_postal }}</p>
+    <p>Téléphone : 0{{ library.telephone }}</p>
+
+    <p>Voir les livres disponibles de cette librairie <a href="{% url 'detail_library_livres' library.id %}">en cliquant
+        ici</a>.</p>
+    <p>Retourner à la liste des librairies <a href="{% url 'index_libraries' %}">en cliquant ici</a>.</p>
+{% endblock %}

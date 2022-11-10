@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+    
+    {% block style %}<link rel="stylesheet" href="{% static 'styles/login.css' %}"></link> {% endblock style %}
+    {% block page_title  %}Login{% endblock  %}
+
+
+    {% block content %}
+    
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 offset-1">
+          <img src="{% static 'images/undraw_remotely_2j6y.svg' %}" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-9">
+              <div class="mb-5">
+              <h3>Sign In</h3>
+              <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+            </div>
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+              <div class="form-group first">
+                <input name="username" type="text" class="form-control" id="username" placeholder="username">
+
+              </div>
+              <div class="form-group last mb-4">
+                <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                
+              </div>
+            
+              <div class="d-flex mb-5 align-items-center">
+                <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+                  <input type="checkbox" checked="checked"/>
+                  <div class="control__indicator"></div>
+                </label>
+                <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span> 
+              </div>
+
+              <input type="submit" value="Log In" class="btn btn-block btn-primary">
+
+              
+            </form>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  {% endblock content %}
+
+
+
+
+<style>
+

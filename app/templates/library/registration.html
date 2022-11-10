@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+    {% block page_title  %}Registration{% endblock  %}
+
+
+    {% block content %}
+    
+    <section class="vh-100" >
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+      
+                      <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+      
+              <form method="POST" action="">
+                {% csrf_token %}
+                
+                <div class="form-group input-group mb-4 {% if form.username.errors %}errors{% endif %}">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text h-100"> <i class="fa fa-user"></i> </span>
+                     </div>
+                     {% render_field  form.username  class="form-control" placeholder="User Name" %}
+                     {{form.username.errors}}
+                </div>
+                
+                <div class="form-group input-group mb-4 {% if form.username.errors %}errors{% endif %}">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text h-100"> <i class="fa fa-user"></i> </span>
+                     </div>
+                     {% render_field  form.first_name  class="form-control" placeholder="First Name" %}
+                     {{form.first_name.errors}}
+                </div>
+
+                <div class="form-group input-group mb-4 {% if form.username.errors %}errors{% endif %}">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text h-100"> <i class="fa fa-user"></i> </span>
+                     </div>
+                     {% render_field  form.last_name  class="form-control" placeholder="Last Name" %}
+                     {{form.last_name.errors}}
+                </div>
+                
+                <!-- form-group// -->
+                <div class="form-group input-group mb-4 {% if form.username.errors %}errors{% endif %}">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text h-100"> <i class="fa fa-envelope"></i> </span>
+                     </div>
+                     {% render_field  form.email  class="form-control" placeholder="Email address" type="email" %}
+                     {{form.email.errors}}
+                </div>
+                
+                <!-- form-group// -->     
+                <div class="form-group input-group mb-4 {% if form.username.errors %}errors{% endif %}">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text h-100"> <i class="fa fa-phone"></i> </span>
+                    </div>
+                    <select class="custom-select" style="max-width: 120px;">
+                        <option selected="">+33</option>
+                    </select>
+                    {% render_field  form.numero_telephone  class="form-control" placeholder="Phone Number"  %}
+                    {{form.numero_telephone.errors}}
+                 </div>
+                
+                <!-- form-group// -->
+                <div class="form-group input-group mb-4 {% if form.username.errors %}errors{% endif %}">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text h-100"> <i class="fa fa-building"></i> </span>
+                    </div>
+                    {% render_field  form.role  class="form-control" placeholder="Phone Number"  %}
+                    {{form.role.errors}}
+                </div>
+                
+                <!-- form-group end.// -->
+                <div class="form-group input-group mb-4 {% if form.username.errors %}errors{% endif %}">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text h-100"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    {% render_field  form.password1  class="form-control" placeholder="Create password"  type="password"%}
+                    {{form.password1.errors}}
+                 
+                </div>
+                
+                <!-- form-group// -->
+                <div class="form-group input-group mb-4 {% if form.username.errors %}errors{% endif %}">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text h-100"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    {% render_field  form.password2  class="form-control" placeholder="Confirm password"  type="password"%}
+                    {{form.password2.errors}}
+                </div>
+                
+                <!-- form-group// -->                                      
+                <div class="form-group mb-1">
+                    <button type="submit" class="btn btn-primary btn-block mb-1"> Create Account  </button>
+                </div> <!-- form-group// -->      
+                <p class="text-center">Have an account? <a href="{% url 'login' %}">Log In</a> </p>                                                                 
+            </form>
+                
+                
+        </div>
+        <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+          <img src="{% static 'images/signup.png' %}"
+            class="img-fluid" alt="Sample image">
+
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+</div>
+</section>
+    
+                            
+                       
+{% endblock content %}
+

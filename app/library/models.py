@@ -1,5 +1,20 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
+ROLE = (
+        ('libraire', 'ROLE_LIBRRAIRE'),
+        ('client', 'ROLE_CLIENT'),
+        ('admin','ROLE_ADMIN'),
+    )
+
+class Utilisateur(AbstractUser):
+    role = models.CharField(choices=ROLE,default='client',max_length=10)
+    numero_telephone = models.CharField(max_length=10)
+    # add additional fields in here
+
+    def __str__(self):
+        return self.username
 
 class Librairie(models.Model):
     label = models.CharField(max_length=200)
@@ -66,6 +81,7 @@ class Emprunt(models.Model):
     date_emprunt = models.DateTimeField(auto_now_add=True)
     date_retour = models.DateTimeField(auto_now_add=True, null=True)
     livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='livre_emprunte')
+    user = models.ForeignKey(Utilisateur,on_delete=models.CASCADE,related_name='emprunts',related_query_name="user_emprunte")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='emprunts')
 
     def __str__(self):

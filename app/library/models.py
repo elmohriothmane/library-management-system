@@ -79,7 +79,8 @@ class Livre(models.Model):
 
 class Emprunt(models.Model):
     date_emprunt = models.DateTimeField(auto_now_add=True)
-    date_retour = models.DateTimeField(auto_now_add=True, null=True)
+    date_limite = models.DateTimeField(auto_now_add=False, null=True)
+    date_retour = models.DateTimeField(auto_now_add=False, null=True)
     livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='livre_emprunte')
     user = models.ForeignKey(Utilisateur,on_delete=models.CASCADE,related_name='emprunts',related_query_name="user_emprunte")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='emprunts')

@@ -3,14 +3,14 @@
 
 
 html {
-    font-family: 'Roboto Thin', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 body {
     margin: 0 auto;
     width: 80%;
     text-align: center;
-    font-family: "Roboto", sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     background-color: #f8fafb;
 }
 
@@ -31,7 +31,16 @@ img {
 
 .error {
     font-size: 20px;
-    background-color: red;
+    background-color: darkred;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 1.5em;
+}
+
+.info {
+    font-size: 20px;
+    background-color: darkorange;
     color: white;
     padding-top: 10px;
     padding-bottom: 10px;

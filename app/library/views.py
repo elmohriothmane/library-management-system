@@ -25,15 +25,29 @@ def index(request):
 
 def detail_livre(request, livre_id):
     livre = Livre.objects.get(pk=livre_id)
-    current_user = request.user
-    existing_emprunt = Emprunt.objects.filter(livre=livre, user=current_user)
-    emprunt = None
-    if existing_emprunt:
-        emprunt = existing_emprunt[0]
+    desc_msg = ""
+    success_msg = ""
+    msg_class = ""
+    if request.user.is_authenticated:
+        current_user = request.user
+        existing_emprunt = Emprunt.objects.filter(livre=livre, user=current_user)
+        emprunt = None
+        if existing_emprunt:
+            emprunt = existing_emprunt[0]
+            if emprunt.user == current_user:
+                success_msg = 'Vous empruntez actuellement ce livre.'
+                desc_msg = 'Vous avez jusqu\'au ' + emprunt.date_limite.strftime(
+                    '%d/%m/%Y à %H:%m') + ' pour le rendre. Si vous dépassez cette date, vous aurez des pénalités.'
+                msg_class = 'info'
+    else:
+        emprunt = None
 
     data = {
         'livre': livre,
         'emprunt': emprunt,
+        'desc_msg': desc_msg,
+        'success_msg': success_msg,
+        'msg_class': msg_class,
     }
     return render(request, 'library/show_livre.html', data)
 
@@ -82,8 +96,8 @@ def emprunter_livre(request, livre_id):
             msg_class = 'error'
         else:
             success_msg = 'Vous avez déjà emprunté ce livre.'
-            desc_msg = 'Vous avez jusqu\'au ' + emprunt.date_emprunt.strftime(
-                '%d/%m/%Y à %H:%m') + ' pour le rendre à la librairie "' + livre.librairie.label + '".'
+            desc_msg = 'Vous avez jusqu\'au ' + emprunt.date_limite.strftime(
+                '%d/%m/%Y à %H:%m') + ' pour le rendre. Si vous dépassez cette date, vous aurez des pénalités.'
             msg_class = 'success'
 
     data = {
@@ -91,6 +105,35 @@ def emprunter_livre(request, livre_id):
         'success_msg': success_msg,
         'desc_msg': desc_msg,
         'emprunt': emprunt,
+        'msg_class': msg_class,
+    }
+    return render(request, 'library/show_livre.html', data)
+
+
+def rendre_livre(request, livre_id):
+    current_user = request.user
+    livre = Livre.objects.get(pk=livre_id)
+    livre.set_is_disponible(True)
+    livre.save()
+
+    existing_emprunt = Emprunt.objects.filter(livre=livre, user=current_user)
+    if existing_emprunt:
+        emprunt = existing_emprunt[0]
+        emprunt.delete()
+
+        success_msg = 'Vous avez bien rendu le livre "' + livre.nom + '".'
+        desc_msg = 'Merci de votre confiance.'
+        msg_class = 'success'
+    else:
+        success_msg = 'Vous n\'avez pas emprunté ce livre.'
+        desc_msg = 'Vous ne pouvez pas le rendre.'
+        msg_class = 'error'
+
+    data = {
+        'livre': livre,
+        'success_msg': success_msg,
+        'desc_msg': desc_msg,
+        'emprunt': None,
         'msg_class': msg_class,
     }
     return render(request, 'library/show_livre.html', data)

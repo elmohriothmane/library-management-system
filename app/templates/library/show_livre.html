@@ -20,10 +20,13 @@
     <p>Genre : {{ livre.genre }}</p>
     <p>Disponibilité :
         {% if not livre.is_disponible %}
-            {% if emrpunt.user == app.user %}
-                {{ emrprunt.user.email }}
+            Non disponible.
+            {% if user.is_authenticated and emprunt.user.email == user.email %}
+                <a href="{% url 'rendre_livre' livre.id %}"
+                   onclick="return confirm('Êtes-vous sûrs de vouloir rendre ce livre ?')">Rendre</a>
+                <br>
+                <small><b>{{ desc_msg }}</b></small>
             {% endif %}
-            Non disponible
         {% else %}
             Disponible.
             {% if user.is_authenticated %}

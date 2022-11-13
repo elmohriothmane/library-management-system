@@ -16,11 +16,47 @@
                 <img src="{% static 'images/home.png' %}" alt="Image" class="img-fluid">
             </div>
 
-            {% if user and user.role == "libraire" %}
-                <div class="mt-5">
-                    <a href="{% url 'all_libraries' %}" class="btn btn-primary">Voir les bibliothèques</a>
-                    <a href="{% url 'all_emprunts' %}" class="btn btn-primary">Voir les emprunts</a>
-                </div>
+            {% if user %}
+                {% if user.role == "libraire" %}
+                    <div class="mt-5">
+                        <a href="{% url 'all_libraries' %}" class="btn btn-primary">Voir les bibliothèques</a>
+                        <a href="{% url 'all_emprunts' %}" class="btn btn-primary">Voir les emprunts</a>
+                    </div>
+                {% elif user.role == "client" %}
+                    <h2>Mes emprunts</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover mx-auto mt-5">
+                            <thead>
+                            <tr>
+                                <th>Statut</th>
+                                <th>Date emprunt</th>
+                                <th>Date limite</th>
+                                <th>Livre</th>
+                                <th>Opération</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for emprunt in emprunts_list %}
+                                <tr>
+                                    <td>
+                                        {% if emprunt.date_limite|date:"d/m/Y" >= now|date:"d/m/Y" %}
+                                            Pas de retard
+                                        {% else %}
+                                            En retard
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ emprunt.date_emprunt|date:"d/m/Y h:m:s" }}</td>
+                                    <td>{{ emprunt.date_limite|date:"d/m/Y h:m:s" }}</td>
+                                    <td><a href="{% url 'detail_livre' emprunt.livre.id %}">{{ emprunt.livre.nom }}</a>
+                                    <td><a href="{% url 'detail_livre' emprunt.livre.id %}"
+                                           class="btn btn-warning">Rendre</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
     </div>

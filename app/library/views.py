@@ -14,6 +14,13 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
+    if request.user.is_authenticated and request.user.role == "client":
+        emprunts_list = Emprunt.objects.filter(user=request.user)
+        data = {
+            "emprunts_list": emprunts_list,
+        }
+        return render(request, 'index.html', data)
+
     return render(request, 'index.html')
 
 
@@ -227,9 +234,11 @@ def logout_request(request):
 
 
 def all_emprunts(request):
-    emprunts_list = Emprunt.objects.all()
-    data = {
-        'emprunts_list': emprunts_list,
-        'now' : datetime.now(),
-    }
-    return render(request, 'emprunt/index_emprunts.html', data)
+    if request.user.is_authenticated and request.user.role == "libraire":
+        emprunts_list = Emprunt.objects.all()
+        data = {
+            'emprunts_list': emprunts_list,
+            'now': datetime.now(),
+        }
+        return render(request, 'emprunt/index_emprunts.html', data)
+    return redirect('index')

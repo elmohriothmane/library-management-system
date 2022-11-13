@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}Accueil{% endblock %}
+
+{% block content %}
+    <div class="container pt-5 hero">
+        <div class="row align-items-center text-center text-md-left">
+
+            <div class="col-lg-4">
+                <h1 class="mb-3 display-3">ESGI Libraries</h1>
+                <p style="color: #b3b3b3;font-weight: 300; }">Bienvenue sur la plateforme ESGI Libraries qui vous permet
+                    de trouver des bibliothèques et des livres </p>
+            </div>
+
+            <div class="col-lg-7 offset-md-1">
+                <img src="{% static 'images/home.png' %}" alt="Image" class="img-fluid">
+            </div>
+
+            {% if user and user.role == "libraire" %}
+                <div class="mt-5">
+                    <a href="{% url 'all_libraries' %}" class="btn btn-primary">Voir les bibliothèques</a>
+                    <a href="{% url 'all_emprunts' %}" class="btn btn-primary">Voir les emprunts</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}
+

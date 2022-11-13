@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}Liste des emprunts{% endblock %}
+
+{% block content %}
+    {% if emprunts_list %}
+        <h1>Liste de tous les emprunts</h1>
+        <div class="table-responsive">
+            <table class="table table-hover mx-auto mt-5">
+                <thead>
+                <tr>
+                    <th>Statut</th>
+                    <th>Client</th>
+                    <th>Date emprunt</th>
+                    <th>Date limite</th>
+                    <th>Livre</th>
+                    <th>Opération</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for emprunt in emprunts_list %}
+                    <tr>
+                        <td>
+                            {% if emprunt.date_limite|date:"d/m/Y" >= now|date:"d/m/Y" %}
+                                Pas de retard
+                            {% else %}
+                                En retard
+                            {% endif %}
+                        </td>
+                        <td>{{ emprunt.user.email }}</td>
+                        <td>{{ emprunt.date_emprunt|date:"d/m/Y h:m:s" }}</td>
+                        <td>{{ emprunt.date_limite|date:"d/m/Y h:m:s" }}</td>
+                        <td><a href="{% url 'detail_livre' emprunt.livre.id %}">{{ emprunt.livre.nom }}</a></td>
+                        <td><a href="#" class="btn btn-warning">Mettre fin</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>Aucun emprunt trouvé.</p>
+    {% endif %}
+
+{% endblock content %}
+

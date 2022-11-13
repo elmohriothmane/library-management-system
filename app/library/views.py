@@ -14,8 +14,10 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
-    # return render(request,"library/index.html.html")
+    return render(request, 'index.html')
 
+
+def all_libraries(request):
     librairies_list = Librairie.objects.all()
     output = ', '.join([q.label for q in librairies_list])
     data = {
@@ -170,9 +172,9 @@ def edit_livre(request, livre_id):
                 form = LivreForm(instance=livre)
             return render(request, 'livre/new_livre.html', {'form': form})
         else:
-            return redirect('index_libraries')
+            return redirect('all_libraries')
 
-    return redirect('index_libraries')
+    return redirect('all_libraries')
 
 
 def delete_livre(request, livre_id):
@@ -181,7 +183,7 @@ def delete_livre(request, livre_id):
         livre.delete()
         return HttpResponseRedirect("/libraries/" + str(livre.librairie.id) + "/livres")
 
-    return redirect('index_libraries')
+    return redirect('all_libraries')
 
 
 def signup(request):
@@ -207,7 +209,7 @@ def login_request(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index_libraries')
+                return redirect('all_libraries')
             else:
                 messages.info(request, "User dosn't exist")
                 return render(request, "library/login.html", {"form": form})
@@ -221,4 +223,13 @@ def login_request(request):
 
 def logout_request(request):
     logout(request)
-    return redirect('index_libraries')
+    return redirect('all_libraries')
+
+
+def all_emprunts(request):
+    emprunts_list = Emprunt.objects.all()
+    data = {
+        'emprunts_list': emprunts_list,
+        'now' : datetime.now(),
+    }
+    return render(request, 'emprunt/index_emprunts.html', data)

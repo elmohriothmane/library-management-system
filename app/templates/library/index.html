@@ -1,31 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
-    {% block page_title  %}Index{% endblock  %}
+{% block page_title %}Liste des librairies{% endblock %}
 
-    {% block content %}
-    <div class="container pt-5 hero">
-        <div class="row align-items-center text-center text-md-left">
-          
-          <div class="col-lg-4">
-            <h1 class="mb-3 display-3">ESGI Libraries</h1>
-            <p style="color: #b3b3b3;font-weight: 300; }">Bienvenue sur la plateforme ESGI Libraries qui vous permet de trouver des bibliothèques et des livres </p>
-          </div>
-          
-          <div class="col-lg-7 offset-md-1">
-            <img src="{% static 'images/home.png' %}" alt="Image" class="img-fluid">    
-          </div>
-        </div>
-      </div>
-        {% if librairies_list %}
-            <h1>Liste de toutes les librairies</h1>
-            <ul>
-                {% for library in librairies_list %}
-                    <li><a href="{% url 'detail_library' library.id %}">{{ library.label }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Aucune librairie trouvée.</p>
-        {% endif %}
-        
-    {% endblock content %}
+{% block content %}
+    {% if librairies_list %}
+        <h1>Liste de toutes les librairies</h1>
+        <ul>
+            {% for library in librairies_list %}
+                <li><a href="{% url 'detail_library' library.id %}">{{ library.label }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune librairie trouvée.</p>
+    {% endif %}
+
+{% endblock content %}
 

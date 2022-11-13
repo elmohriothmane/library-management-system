@@ -14,4 +14,7 @@ urlpatterns = [
     path('libraries/<int:library_id>/livres/', views.detail_library_livres, name='detail_library_livres'),
     path('livres/<int:livre_id>/emprunter', views.emprunter_livre, name='emprunter_livre'),
     path('livres/<int:livre_id>/rendre', views.rendre_livre, name='rendre_livre'),
+    path('library/<int:library_id>/livres/new', views.new_livre, name='new_livre'),
+    path('livres/<int:livre_id>/edit', views.edit_livre, name='edit_livre'),
+    path('livres/<int:livre_id>/delete', views.delete_livre, name='delete_livre'),
 ]

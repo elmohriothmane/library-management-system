@@ -11,4 +11,8 @@
     <p>Voir les livres disponibles de cette librairie <a href="{% url 'detail_library_livres' library.id %}">en cliquant
         ici</a>.</p>
     <p>Retourner à la liste des librairies <a href="{% url 'index_libraries' %}">en cliquant ici</a>.</p>
+
+    {% if user and user.role == "libraire" %}
+        <a href="{% url 'new_livre' library.id %}" class="btn btn-primary">Ajouter un livre</a>
+    {% endif %}
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block page_title %}Nouveau livre{% endblock %}
+
+
+{% block content %}
+    <h1>Nouveau livre</h1>
+    <form action="#" method="POST">
+        {% csrf_token %}
+
+        {% render_field form.nom class="form-control mt-5" placeholder="Nom du livre" %}
+        {% render_field form.auteur class="form-control mt-2" placeholder="Auteur" %}
+        {% render_field form.jaquette class="form-control mt-2" placeholder="Jaquette" %}
+        {% render_field form.editeur class="form-control mt-2" placeholder="Editeur" %}
+        {% render_field form.collection class="form-control mt-2" placeholder="Collection" %}
+        {% render_field form.genre class="form-control mt-2" placeholder="Genre" %}
+        {% render_field form.librairie class="form-select mt-2" %}
+        <div class="form-group mt-2">
+            <label for="id_is_disponible" class="float-start me-2">Si disponible</label>
+            {% render_field form.is_disponible class="form-check" %}
+        </div>
+        <input type="submit" value="Valider" class="btn btn-primary">
+    </form>
+{% endblock %}

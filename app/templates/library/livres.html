@@ -5,11 +5,26 @@
         <h1>Liste de tous les livres de la librairie {{ library.label }}</h1>
         <ul style="width: 30%; margin: 0 auto">
             {% for livre in livres %}
-                <li><a href="/livres/{{ livre.id }}/">{{ livre.nom }}</a></li>
+                <li class="d-inline"><a href="/livres/{{ livre.id }}/">{{ livre.nom }}</a></li>
+                {% if user and user.role == "libraire" %}
+                    | <a href="{% url 'edit_livre' livre.id %}" class="d-inline">Modifier</a>
+                    |<a href="{% url 'delete_livre' livre.id %}" class="d-inline"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?')">Supprimer</a>
+                {% endif %}
+                <br>
             {% endfor %}
         </ul>
     {% else %}
         <p>Aucun livre trouvé.</p>
     {% endif %}
-    <a href="/">Retour aux librairies</a>
+
+    <div class="mt-4 mb-4">
+        {% if user and user.role == "libraire" %}
+            <a href="{% url 'new_livre' library.id %}" class="btn btn-primary">Ajouter un livre</a>
+        {% endif %}
+    </div>
+
+    <div>
+        <a href="/">Retour aux librairies</a>
+    </div>
 {% endblock %}

@@ -1,9 +1,10 @@
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import Librairie, Livre, Emprunt
-from .forms import SignUpForm
+from .forms import SignUpForm, LivreForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
@@ -137,6 +138,50 @@ def rendre_livre(request, livre_id):
         'msg_class': msg_class,
     }
     return render(request, 'library/show_livre.html', data)
+
+
+def new_livre(request, library_id):
+    if request.user.is_authenticated:
+        if request.user.role == "libraire":
+            if request.method == 'POST':
+                form = LivreForm(request.POST)
+                if form.is_valid():
+                    form.save()
+                    return HttpResponseRedirect("/libraries/" + str(library_id) + "/livres")
+            else:
+                form = LivreForm()
+            return render(request, 'livre/new_livre.html', {'form': form})
+        else:
+            return HttpResponseRedirect("/libraries/" + str(library_id) + "/livres")
+
+    return HttpResponseRedirect("/libraries/" + str(library_id) + "/livres")
+
+
+def edit_livre(request, livre_id):
+    if request.user.is_authenticated:
+        if request.user.role == "libraire":
+            livre = Livre.objects.get(pk=livre_id)
+            if request.method == 'POST':
+                form = LivreForm(request.POST, instance=livre)
+                if form.is_valid():
+                    form.save()
+                    return HttpResponseRedirect("/libraries/" + str(livre.librairie.id) + "/livres")
+            else:
+                form = LivreForm(instance=livre)
+            return render(request, 'livre/new_livre.html', {'form': form})
+        else:
+            return redirect('index_libraries')
+
+    return redirect('index_libraries')
+
+
+def delete_livre(request, livre_id):
+    if request.user.is_authenticated and request.user.role == "libraire":
+        livre = Livre.objects.get(pk=livre_id)
+        livre.delete()
+        return HttpResponseRedirect("/libraries/" + str(livre.librairie.id) + "/livres")
+
+    return redirect('index_libraries')
 
 
 def signup(request):

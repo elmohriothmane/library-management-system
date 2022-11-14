@@ -3,8 +3,8 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import Librairie, Livre, Emprunt
-from .forms import SignUpForm, LivreForm
+from .models import Librairie, Livre, Emprunt, Message
+from .forms import SignUpForm, LivreForm, MessageForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
@@ -35,6 +35,7 @@ def all_libraries(request):
 
 def detail_livre(request, livre_id):
     livre = Livre.objects.get(pk=livre_id)
+    messages = Message.objects.filter(livre=livre_id)
     desc_msg = ""
     success_msg = ""
     msg_class = ""
@@ -58,6 +59,7 @@ def detail_livre(request, livre_id):
         'desc_msg': desc_msg,
         'success_msg': success_msg,
         'msg_class': msg_class,
+        'commentaires': messages,
     }
     return render(request, 'library/show_livre.html', data)
 
@@ -242,3 +244,19 @@ def all_emprunts(request):
         }
         return render(request, 'emprunt/index_emprunts.html', data)
     return redirect('index')
+
+
+def new_message(request, livre_id):
+    if request.user.is_authenticated:
+        livre = Livre.objects.get(pk=livre_id)
+        user = request.user
+        now = datetime.now()
+
+        message = Message()
+        message.contenu = request.POST.get('content-msg')
+        message.date = now
+        message.user = user
+        message.livre = livre
+        message.save()
+
+    return HttpResponseRedirect("/livres/" + str(livre_id) + "/")

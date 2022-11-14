@@ -20,4 +20,6 @@ urlpatterns = [
     path('livres/<int:livre_id>/delete', views.delete_livre, name='delete_livre'),
 
     path('emprunts/', views.all_emprunts, name='all_emprunts'),
+
+    path('livres/<int:livre_id>/nouveau-commentaire', views.new_message, name='new_message'),
 ]

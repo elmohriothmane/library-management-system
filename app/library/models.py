@@ -3,18 +3,21 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 
 ROLE = (
-        ('libraire', 'ROLE_LIBRRAIRE'),
-        ('client', 'ROLE_CLIENT'),
-        ('admin','ROLE_ADMIN'),
-    )
+    ('libraire', 'ROLE_LIBRRAIRE'),
+    ('client', 'ROLE_CLIENT'),
+    ('admin', 'ROLE_ADMIN'),
+)
+
 
 class Utilisateur(AbstractUser):
-    role = models.CharField(choices=ROLE,default='client',max_length=10)
+    role = models.CharField(choices=ROLE, default='client', max_length=10)
     numero_telephone = models.CharField(max_length=10)
+
     # add additional fields in here
 
     def __str__(self):
         return self.username
+
 
 class Librairie(models.Model):
     label = models.CharField(max_length=200)
@@ -82,7 +85,9 @@ class Emprunt(models.Model):
     date_limite = models.DateTimeField(auto_now_add=False, null=True)
     date_retour = models.DateTimeField(auto_now_add=False, null=True)
     livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='livre_emprunte')
-    user = models.ForeignKey(Utilisateur,on_delete=models.CASCADE,related_name='emprunts',related_query_name="user_emprunte")
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='emprunts',
+                             related_query_name="user_emprunte")
+
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='emprunts')
 
     def __str__(self):
@@ -97,3 +102,22 @@ class Emprunt(models.Model):
     def get_livre(self):
         return self.livre
 
+
+class Message(models.Model):
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='messages')
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='messages')
+    # groupe = models.ForeignKey(Groupe, on_delete=models.CASCADE, related_name='messages')
+    date = models.DateTimeField(auto_now_add=True)
+    contenu = models.TextField()
+
+    def __str__(self):
+        return self.contenu
+
+    def get_date(self):
+        return self.date
+
+    def get_user(self):
+        return self.user
+
+    def get_livre(self):
+        return self.livre

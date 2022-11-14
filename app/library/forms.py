@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 
-from .models import Utilisateur, Livre, Librairie
+from .models import Utilisateur, Livre, Librairie, Message
 
 ROLE = (
     ('libraire', 'ROLE_LIBRRAIRE'),
@@ -69,3 +69,12 @@ class LivreForm(ModelForm):
     class Meta:
         model = Livre
         fields = ('nom', 'auteur', 'jaquette', 'editeur', 'collection', 'genre', 'is_disponible', 'librairie')
+
+
+class MessageForm(ModelForm):
+    content = forms.CharField(widget=forms.Textarea, required=True, error_messages={
+        "required": "Message is required", })
+
+    class Meta:
+        model = Message
+        fields = ('content',)

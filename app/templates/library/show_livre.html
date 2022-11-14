@@ -37,4 +37,27 @@
 
     <p>Retourner à la librairie <a href="{% url 'detail_library' livre.librairie.id %}">en cliquant ici</a>.</p>
 
+    <h1 class="text-start">Section commentaires</h1>
+
+    {% for commentaire in commentaires %}
+        <div class="card text-start w-50 mt-3">
+            <div class="card-header">
+                <h5 class="card-title">{{ commentaire.user.username }} - {{ commentaire.user.email }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ commentaire.contenu }}</p>
+                <p class="card-text"><small class="text-muted">Posté le
+                    {{ commentaire.date|date:"d/m/Y à h:m:s" }}</small></p>
+            </div>
+        </div>
+    {% endfor %}
+
+    <form action="{% url 'new_message' livre.id %}" method="POST" class="text-start mt-5">
+        {% csrf_token %}
+        <div>
+            <textarea name="content-msg" id="content-msg" cols="30" rows="3" style="width: 700px"
+                      placeholder="Nouveau commentaire..." class="form-control"></textarea>
+        </div>
+        <input type="submit" value="Publier" class="btn btn-primary mt-2">
+    </form>
 {% endblock %}

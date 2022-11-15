@@ -23,7 +23,7 @@
                         <a href="{% url 'all_emprunts' %}" class="btn btn-primary">Voir les emprunts</a>
                     </div>
                 {% elif user.role == "client" %}
-                    <h2>Mes emprunts</h2>
+                    <h2 class="mt-5">Mes emprunts</h2>
                     <div class="table-responsive">
                         <table class="table table-hover mx-auto mt-5">
                             <thead>
@@ -50,6 +50,34 @@
                                     <td><a href="{% url 'detail_livre' emprunt.livre.id %}">{{ emprunt.livre.nom }}</a>
                                     <td><a href="{% url 'detail_livre' emprunt.livre.id %}"
                                            class="btn btn-warning">Rendre</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="mt-5">Prochaines séances de lecture</h2>
+                    <div class="table-responsive mb-5">
+                        <table class="table table-hover mx-auto mt-5">
+                            <thead>
+                            <tr>
+                                <th>Livre</th>
+                                <th>Date de début</th>
+                                <th>Opération</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for groupe in groupes_list %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'detail_livre' groupe.livre.id %}">{{ groupe.livre.nom }}</a>
+                                    </td>
+                                    <td>
+                                        {{ groupe.date|date:"d/m/Y" }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'detail_groupe' groupe.id %}" class="btn btn-primary">Voir</a>
                                     </td>
                                 </tr>
                             {% endfor %}

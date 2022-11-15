@@ -15,9 +15,11 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     if request.user.is_authenticated and request.user.role == "client":
+        groupes_list = Groupe.objects.all()
         emprunts_list = Emprunt.objects.filter(user=request.user)
         data = {
             "emprunts_list": emprunts_list,
+            'groupes_list': groupes_list,
         }
         return render(request, 'index.html', data)
 

@@ -5,8 +5,6 @@
         <h1>Liste de tous les livres de la librairie {{ library.label }}</h1>
         <ul style="width: 30%; margin: 0 auto">
             {% for livre in livres %}
-            {{livre.image}}
-
             <div class="grid place-items-center p-2">
                 <img
                   src="{{livre.image.url}}"

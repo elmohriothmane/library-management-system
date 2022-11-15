@@ -11,6 +11,16 @@
         {{ emprunt.date_emprunt }}
     {% endif %}
 
+    <div class="grid place-items-center p-2">
+        <img
+          src="{{livre.image.url}}"
+          alt="{{book.name}}"
+          height="100"
+          width="80"
+          class="mb-4"
+        />
+      </div>
+
     <h1>Livre "{{ livre.nom }}"</h1>
 
     <p>Auteur : {{ livre.auteur }}</p>

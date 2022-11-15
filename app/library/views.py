@@ -244,3 +244,7 @@ def all_emprunts(request):
         }
         return render(request, 'emprunt/index_emprunts.html', data)
     return redirect('index')
+
+
+def profile(request):
+    return render(request, 'library/profile.html')

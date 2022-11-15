@@ -20,5 +20,5 @@ urlpatterns = [
     path('livres/<int:livre_id>/delete', views.delete_livre, name='delete_livre'),
 
     path('emprunts/', views.all_emprunts, name='all_emprunts'),
-    path('profile/', views.profile, name='profile'),
+    path('profile/<str:username>', views.profile, name='profile'),
 ]

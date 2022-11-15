@@ -3,7 +3,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import Librairie, Livre, Emprunt
+from .models import Librairie, Livre, Emprunt,Utilisateur
 from .forms import SignUpForm, LivreForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
@@ -246,5 +246,9 @@ def all_emprunts(request):
     return redirect('index')
 
 
-def profile(request):
-    return render(request, 'library/profile.html')
+def profile(request,username):
+    user = Utilisateur.objects.get(username=username)
+    data = {
+            'user': user,
+        }
+    return render(request, 'library/profile.html',data)

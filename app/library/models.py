@@ -10,7 +10,10 @@ ROLE = (
 
 class Utilisateur(AbstractUser):
     role = models.CharField(choices=ROLE,default='client',max_length=10)
-    numero_telephone = models.CharField(max_length=10)
+    numero_telephone = models.CharField(max_length=10,blank=True)
+    street = models.CharField(max_length=10,null=True,blank=True)
+    ville = models.CharField(max_length=10,null=True,blank=True)
+    zip_code  = models.CharField(max_length=10,null=True,blank=True)
     # add additional fields in here
 
     def __str__(self):

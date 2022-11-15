@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 
 ROLE = (
-        ('libraire', 'ROLE_LIBRRAIRE'),
-        ('client', 'ROLE_CLIENT'),
-        ('admin','ROLE_ADMIN'),
-    )
+    ('libraire', 'ROLE_LIBRRAIRE'),
+    ('client', 'ROLE_CLIENT'),
+    ('admin', 'ROLE_ADMIN'),
+)
+
 
 class Utilisateur(AbstractUser):
     role = models.CharField(choices=ROLE,default='client',max_length=10)
@@ -18,6 +19,7 @@ class Utilisateur(AbstractUser):
 
     def __str__(self):
         return self.username
+
 
 class Librairie(models.Model):
     label = models.CharField(max_length=200)
@@ -87,7 +89,9 @@ class Emprunt(models.Model):
     date_limite = models.DateTimeField(auto_now_add=False, null=True)
     date_retour = models.DateTimeField(auto_now_add=False, null=True)
     livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='livre_emprunte')
-    user = models.ForeignKey(Utilisateur,on_delete=models.CASCADE,related_name='emprunts',related_query_name="user_emprunte")
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='emprunts',
+                             related_query_name="user_emprunte")
+
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='emprunts')
 
     def __str__(self):
@@ -102,3 +106,44 @@ class Emprunt(models.Model):
     def get_livre(self):
         return self.livre
 
+
+class Groupe(models.Model):
+    date = models.DateTimeField(auto_now_add=False)
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='groupes')
+    nb_participants_max = models.IntegerField()
+    users = models.CharField(max_length=200, default=';')
+
+    def __str__(self):
+        return self.livre.nom
+
+    def get_date(self):
+        return self.date
+
+    def get_livre(self):
+        return self.livre
+
+    def get_nb_participants_max(self):
+        return self.nb_participants_max
+
+    def get_users(self):
+        return self.users
+
+
+class Message(models.Model):
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='messages')
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='messages', null=True)
+    groupe = models.ForeignKey(Groupe, on_delete=models.CASCADE, related_name='messages', null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    contenu = models.TextField()
+
+    def __str__(self):
+        return self.contenu
+
+    def get_date(self):
+        return self.date
+
+    def get_user(self):
+        return self.user
+
+    def get_livre(self):
+        return self.livre

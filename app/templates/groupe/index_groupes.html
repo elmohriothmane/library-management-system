@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}Liste des lectures{% endblock %}
+
+{% block content %}
+    {% if groupes_list %}
+        <h1>Liste de toutes les lectures</h1>
+        <div class="table-responsive">
+            <table class="table table-hover mx-auto mt-5">
+                <thead>
+                <tr>
+                    <th>Livre</th>
+                    <th>Date de début</th>
+                    <th>Opération</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for groupe in groupes_list %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'detail_livre' groupe.livre.id %}">{{ groupe.livre.nom }}</a>
+                        </td>
+                        <td>
+                            {{ groupe.date|date:"d/m/Y" }}
+                        </td>
+                        <td>
+                            <a href="{% url 'detail_groupe' groupe.id %}" class="btn btn-primary">Voir</a>
+                            {% if user and user.role == "libraire" %}
+                                <a href="{% url 'edit_groupe' groupe.id %}" class="btn btn-primary">Modifier</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>Aucune lecture trouvée.</p>
+    {% endif %}
+
+    <div class="mt-4 mb-4">
+        {% if user and user.role == "libraire" %}
+            <a href="{% url 'new_groupe' %}" class="btn btn-primary">Créer un groupe de lecture</a>
+        {% endif %}
+    </div>
+
+{% endblock content %}
+

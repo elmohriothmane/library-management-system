@@ -37,6 +37,7 @@
                         </li>
 
                         <li><a href="{% url 'all_libraries' %}">Librairies</a></li>
+                        <li><a href="{% url 'all_groupes' %}">Lectures</a></li>
                         {% if user and user.role == "libraire" %}
                             <li><a href="{% url 'all_emprunts' %}">Emprunts</a></li>
                         {% endif %}

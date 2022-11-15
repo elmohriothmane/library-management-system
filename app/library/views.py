@@ -3,8 +3,8 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import Librairie, Livre, Emprunt,Utilisateur
-from .forms import SignUpForm, LivreForm
+from .models import Librairie, Livre, Emprunt,Utilisateur, Message, Groupe, Utilisateur
+from .forms import SignUpForm, LivreForm, MessageForm, GroupeForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
@@ -17,9 +17,11 @@ from django.conf import settings
 
 def index(request):
     if request.user.is_authenticated and request.user.role == "client":
+        groupes_list = Groupe.objects.all()
         emprunts_list = Emprunt.objects.filter(user=request.user)
         data = {
             "emprunts_list": emprunts_list,
+            'groupes_list': groupes_list,
         }
         return render(request, 'index.html', data)
 
@@ -37,6 +39,7 @@ def all_libraries(request):
 
 def detail_livre(request, livre_id):
     livre = Livre.objects.get(pk=livre_id)
+    messages = Message.objects.filter(livre=livre_id)
     desc_msg = ""
     success_msg = ""
     msg_class = ""
@@ -60,6 +63,7 @@ def detail_livre(request, livre_id):
         'desc_msg': desc_msg,
         'success_msg': success_msg,
         'msg_class': msg_class,
+        'commentaires': messages,
     }
     return render(request, 'library/show_livre.html', data)
 
@@ -252,3 +256,103 @@ def profile(request,username):
             'user': user,
         }
     return render(request, 'library/profile.html',data)
+
+def new_message(request, livre_id):
+    if request.user.is_authenticated:
+        livre = Livre.objects.get(pk=livre_id)
+        user = request.user
+        now = datetime.now()
+
+        message = Message()
+        message.contenu = request.POST.get('content-msg')
+        message.date = now
+        message.user = user
+        message.livre = livre
+        message.save()
+
+    return HttpResponseRedirect("/livres/" + str(livre_id) + "/")
+
+
+def all_groupes(request):
+    groupes_list = Groupe.objects.all()
+    data = {
+        'groupes_list': groupes_list,
+    }
+    return render(request, 'groupe/index_groupes.html', data)
+
+
+def new_message_groupe(request, groupe_id):
+    if request.user.is_authenticated:
+        groupe = Groupe.objects.get(pk=groupe_id)
+        user = request.user
+        now = datetime.now()
+
+        message = Message()
+        message.contenu = request.POST.get('content-msg')
+        message.date = now
+        message.user = user
+        message.groupe = groupe
+        message.save()
+
+    return HttpResponseRedirect("/lectures/" + str(groupe_id) + "/")
+
+
+def detail_groupe(request, groupe_id):
+    groupe = Groupe.objects.get(pk=groupe_id)
+    messages = Message.objects.filter(groupe=groupe_id)
+    data = {
+        'groupe': groupe,
+        'total_users': groupe.users.count(";") - 1,
+        "commentaires": messages,
+    }
+
+    if request.user.is_authenticated:
+        user = request.user
+        data = {
+            'groupe': groupe,
+            'user_search': ";" + str(user.id) + ";",
+            'total_users': groupe.users.count(";") - 1,
+            "commentaires": messages,
+        }
+
+    return render(request, 'groupe/show_groupe.html', data)
+
+
+def new_groupe(request):
+    if request.user.is_authenticated and request.user.role == "libraire":
+        if request.method == 'POST':
+            form = GroupeForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect("/lectures/")
+        else:
+            form = GroupeForm()
+        return render(request, 'groupe/new_groupe.html', {'form': form})
+    return HttpResponseRedirect("/lectures/")
+
+
+def edit_groupe(request, groupe_id):
+    groupe = Groupe.objects.get(pk=groupe_id)
+    if request.user.is_authenticated and request.user.role == "libraire":
+        if request.method == 'POST':
+            form = GroupeForm(request.POST, instance=groupe)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect("/lectures/" + str(groupe.id) + "")
+        else:
+            form = GroupeForm(instance=groupe)
+        return render(request, 'groupe/new_groupe.html', {'form': form})
+    return HttpResponseRedirect("/lectures/" + str(groupe.id) + "")
+
+
+def inscription_groupe(request, groupe_id):
+    groupe = Groupe.objects.get(pk=groupe_id)
+    if request.user.is_authenticated:
+        user = request.user
+        print("####################################")
+        print(request.method)
+        print("####################################")
+        print(user.id)
+        groupe.users += str(user.id) + ";"
+        groupe.save()
+        return HttpResponseRedirect("/lectures/" + str(groupe.id) + "")

@@ -22,4 +22,11 @@ urlpatterns = [
     path('emprunts/', views.all_emprunts, name='all_emprunts'),
 
     path('livres/<int:livre_id>/nouveau-commentaire', views.new_message, name='new_message'),
+    path('lectures/<int:groupe_id>/nouveau-commentaire', views.new_message_groupe, name='new_message_groupe'),
+
+    path('lectures/', views.all_groupes, name='all_groupes'),
+    path('lectures/<int:groupe_id>/', views.detail_groupe, name='detail_groupe'),
+    path('lectures/new', views.new_groupe, name='new_groupe'),
+    path('lectures/<int:groupe_id>/edit', views.edit_groupe, name='edit_groupe'),
+    path('lectures/<int:groupe_id>/inscription', views.inscription_groupe, name='inscription_groupe'),
 ]

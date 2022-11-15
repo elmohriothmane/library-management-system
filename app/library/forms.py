@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 
-from .models import Utilisateur, Livre, Librairie, Message
+from .models import Utilisateur, Livre, Librairie, Message, Groupe
 
 ROLE = (
     ('libraire', 'ROLE_LIBRRAIRE'),
@@ -78,3 +78,16 @@ class MessageForm(ModelForm):
     class Meta:
         model = Message
         fields = ('content',)
+
+
+class GroupeForm(ModelForm):
+    livre = forms.ModelChoiceField(queryset=Livre.objects.all(), required=True, error_messages={
+        "required": "Book is required", })
+    date = forms.DateField(required=True, error_messages={
+        "required": "Date is required", }, widget=forms.SelectDateWidget)
+    nb_participants_max = forms.IntegerField(required=True, error_messages={
+        "required": "Number of participants is required", })
+
+    class Meta:
+        model = Groupe
+        fields = ('livre', 'date', 'nb_participants_max',)

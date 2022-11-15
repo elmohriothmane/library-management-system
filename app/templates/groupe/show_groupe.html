@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Groupe de lecture du {{ groupe.date|date:"d/m/Y" }}</h1>
+    <p>
+        Livre : <a href="{% url 'detail_livre' groupe.livre.id %}">{{ groupe.livre.nom }}</a>
+    </p>
+    <p>
+        Clients inscrits : {{ total_users }}
+
+    </p>
+    {% if user.is_authenticated %}
+        {% if user_search not in groupe.users and total_users < groupe.nb_participants_max %}
+            <p>
+                <a href="{% url "inscription_groupe" groupe.id %}" class="btn btn-primary mt-3"
+                   onclick="return confirm('Êtes-vous sûrs de vouloir vous inscrire à ce groupe de lecture ?')">S'inscrire</a>
+            </p>
+        {% endif %}
+    {% else %}
+        <p>
+            <b>Veuillez vous connecter pour pouvoir vous inscrire à ce groupe de lecture.</b>
+        </p>
+    {% endif %}
+
+    <h2 class="text-start">Section commentaires</h2>
+
+    {% for commentaire in commentaires %}
+        <div class="card text-start w-50 mt-3">
+            <div class="card-header">
+                <h5 class="card-title">{{ commentaire.user.username }} - {{ commentaire.user.email }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ commentaire.contenu }}</p>
+                <p class="card-text"><small class="text-muted">Posté le
+                    {{ commentaire.date|date:"d/m/Y à h:m:s" }}</small></p>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'new_message_groupe' groupe.id %}" method="POST" class="text-start mt-5">
+            {% csrf_token %}
+            <div>
+            <textarea name="content-msg" id="content-msg" cols="30" rows="3" style="width: 700px"
+                      placeholder="Nouveau commentaire..." class="form-control"></textarea>
+            </div>
+            <input type="submit" value="Publier" class="btn btn-primary mt-2">
+        </form>
+    {% endif %}
+{% endblock %}

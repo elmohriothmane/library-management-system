@@ -103,10 +103,32 @@ class Emprunt(models.Model):
         return self.livre
 
 
+class Groupe(models.Model):
+    date = models.DateTimeField(auto_now_add=False)
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='groupes')
+    nb_participants_max = models.IntegerField()
+    users = models.CharField(max_length=200, default=';')
+
+    def __str__(self):
+        return self.livre.nom
+
+    def get_date(self):
+        return self.date
+
+    def get_livre(self):
+        return self.livre
+
+    def get_nb_participants_max(self):
+        return self.nb_participants_max
+
+    def get_users(self):
+        return self.users
+
+
 class Message(models.Model):
     user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='messages')
-    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='messages')
-    # groupe = models.ForeignKey(Groupe, on_delete=models.CASCADE, related_name='messages')
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='messages', null=True)
+    groupe = models.ForeignKey(Groupe, on_delete=models.CASCADE, related_name='messages', null=True)
     date = models.DateTimeField(auto_now_add=True)
     contenu = models.TextField()
 

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block page_title %}Nouveau livre{% endblock %}
+
+
+{% block content %}
+    <h1>Nouveau livre</h1>
+    <form action="#" method="POST">
+        {% csrf_token %}
+
+        <div class="text-start mt-5">
+            <label for="id_livre">Choisir un livre</label>
+            {% render_field form.livre class="form-control" placeholder="Nom du livre" %}
+        </div>
+        <label class="mt-4" for="id_date">Date de lecture</label>
+        <div class="d-flex w-50 mx-auto">
+            {% render_field form.date class="form-control" placeholder="Date de lecture" %}
+        </div>
+        {% render_field form.nb_participants_max class="form-control mt-3" placeholder="Nombre de participants maximum" %}
+
+        <input type="submit" value="Valider" class="btn btn-primary mt-3">
+    </form>
+{% endblock %}

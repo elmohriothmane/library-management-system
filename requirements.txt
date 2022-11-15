@@ -1,4 +1,4 @@
 Django>=3.2,<4.1
 Django-Widget-Tweaks
-
+Pillow
 python-dateutil~=2.8.2

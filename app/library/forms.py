@@ -66,6 +66,8 @@ class LivreForm(ModelForm):
     librairie = forms.ModelChoiceField(queryset=Librairie.objects.all(), required=True, error_messages={
         "required": "Library is required", })
 
+    image=forms.ImageField(required=False)
+
     class Meta:
         model = Livre
-        fields = ('nom', 'auteur', 'jaquette', 'editeur', 'collection', 'genre', 'is_disponible', 'librairie')
+        fields = ('nom', 'auteur', 'jaquette', 'editeur', 'collection', 'genre', 'is_disponible', 'librairie','image')

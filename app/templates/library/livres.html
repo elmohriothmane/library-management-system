@@ -5,6 +5,17 @@
         <h1>Liste de tous les livres de la librairie {{ library.label }}</h1>
         <ul style="width: 30%; margin: 0 auto">
             {% for livre in livres %}
+            {{livre.image}}
+
+            <div class="grid place-items-center p-2">
+                <img
+                  src="{{livre.image.url}}"
+                  alt="{{book.name}}"
+                  height="100"
+                  width="80"
+                  class="mb-4"
+                />
+              </div>
                 <li class="d-inline"><a href="/livres/{{ livre.id }}/">{{ livre.nom }}</a></li>
                 {% if user and user.role == "libraire" %}
                     | <a href="{% url 'edit_livre' livre.id %}" class="d-inline">Modifier</a>

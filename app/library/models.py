@@ -45,6 +45,8 @@ class Livre(models.Model):
     genre = models.CharField(max_length=200, default='')
     is_disponible = models.BooleanField(default=True)
     librairie = models.ForeignKey(Librairie, on_delete=models.CASCADE, related_name='livres')
+    image = models.ImageField(null=True,upload_to='livre_pics',default='livre_pics/default.png')
+   
 
     def __str__(self):
         return self.nom

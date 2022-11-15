@@ -6,7 +6,7 @@
 
 {% block content %}
     <h1>Nouveau livre</h1>
-    <form action="#" method="POST">
+    <form action="#" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         {% render_field form.nom class="form-control mt-5" placeholder="Nom du livre" %}
@@ -16,6 +16,14 @@
         {% render_field form.collection class="form-control mt-2" placeholder="Collection" %}
         {% render_field form.genre class="form-control mt-2" placeholder="Genre" %}
         {% render_field form.librairie class="form-select mt-2" %}
+
+        <div class="custom-file" id="customFile">
+            {% render_field form.image class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp" %}
+            <label class="custom-file-label" for="exampleInputFile">
+                Upload Image
+            </label>
+        </div>
+
         <div class="form-group mt-2">
             <label for="id_is_disponible" class="float-start me-2">Si disponible</label>
             {% render_field form.is_disponible class="form-check" %}

@@ -16,6 +16,66 @@
                 <img src="{% static 'images/home.png' %}" alt="Image" class="img-fluid">
             </div>
 
+           
+                      
+                        
+        <div class="row ">
+            <div class="col-12 mb-4">
+                <div class="d-flex">
+                
+                </div>
+                <br/><br/>
+                <hr>
+            </div>
+        </div>
+
+
+
+        <div clas="header-search" class="page-header">
+            <div class="page-header-search row">
+                <!-- Logo -->
+                <div class="col-md-4">
+                    <a href="#" class="logo">ESGI <span>Library </span></a>
+                </div>
+
+
+                <form action="/search/" method="GET">
+                    <div class="input-group">
+                    
+                            <input type="text" name="search-query" class="form-control" placeholder="Search Book">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                    
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+      <!-- Main content -->
+    <div class="container" id="title">
+
+        {% for livre in livres_list %}
+        <div class="book-card">
+            <div class="book-card__image">
+              <img src="{{livre.image.url}}" alt="">
+            </div>
+            <br/>
+            <div>Title : <span class="book-copy"> {{ livre.nom }}</span></div>
+            <div>Auteur : <span class="book-copy"> {{ livre.auteur }}</span></div>
+            <div>Category : <span class="book-copy"> {{ livre.genre }}</span></div>
+            <a href="{% url 'detail_livre' livre.id %}" class="book-link">view</a>
+    
+          </div>
+        {% endfor %}
+                 
+    </div>
+        
             {% if user %}
                 {% if user.role == "libraire" %}
                     <div class="mt-5">

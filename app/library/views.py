@@ -11,21 +11,32 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 import os
 from django.conf import settings
+from django.db.models import Q
 
 
 # Create your views here.
 
 def index(request):
     if request.user.is_authenticated and request.user.role == "client":
+        query = request.GET.get('search-input')
+        livres_list= Livre.objects.all()
         groupes_list = Groupe.objects.all()
         emprunts_list = Emprunt.objects.filter(user=request.user)
         data = {
             "emprunts_list": emprunts_list,
             'groupes_list': groupes_list,
+            'livres_list': livres_list,
         }
         return render(request, 'index.html', data)
 
     return render(request, 'index.html')
+
+def search(request):
+    search_query=request.GET.get('search-query')
+
+    
+    livres_list=Livre.objects.filter(Q(nom__icontains=search_query) | Q(genre__icontains=search_query))
+    return render(request,'index.html',{'livres_list':livres_list})
 
 
 def all_libraries(request):

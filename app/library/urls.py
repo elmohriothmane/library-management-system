@@ -1,13 +1,19 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('login/', views.login_request,name="login"),
     path('signup/', views.signup,name="signup"),
     path('logout/', views.logout_request, name='logout'),
+    path('password-reset-confirm/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),
+         name='password_reset_confirm'),
 
+    path('search/',views.search),
     path('libraries/', views.all_libraries, name='all_libraries'),
     path('libraries/<int:library_id>/', views.detail_library, name='detail_library'),
     path('libraries/<int:library_id>/livres/', views.detail_library_livres, name='detail_library_livres'),

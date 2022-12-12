@@ -133,3 +133,142 @@ a:hover {
 .card{
     background-color: inherit !important;
 }
+
+.page-header-search {
+  background-color: #e3b005;
+  padding: 20px 0;
+}
+
+.page-header-search {
+  margin: 0;
+  border-bottom: none;
+}
+
+/*Search area*/
+.search {
+    display: flex;
+    max-width: 530px;
+    min-width: 300px;
+    margin: 0 auto 30px;
+    box-sizing: border-box;
+  }
+  .search__input {
+    flex: 1;
+    height: 36px;
+      padding: 10px;
+      background-color: rgba(237,237,237,.7);
+      border: none;
+    border-radius: 2px 0 0 2px;
+  }
+  .search__btn {
+    text-align: center;
+    background-color: #fff;
+    line-height: 36px;
+    border-radius: 0 2px 2px 0;
+  }
+  .icon-search {
+    vertical-align: middle;
+  }
+  
+  ::-webkit-input-placeholder {
+    color: rgba(84,127,28,.6);
+    font-size: 14px;
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    color: rgba(84,127,28,.6);
+    font-size: 14px;
+  }
+  ::-moz-placeholder {  /* Firefox 19+ */
+    color: rgba(84,127,28,.6);
+    font-size: 14px;
+  }
+  :-ms-input-placeholder {  
+    color:rgba(84,127,28,.6);
+    font-size: 14px;
+  }
+  
+
+/*Change main logo area*/
+.main-logo {
+  float: left;
+  width: 40%;
+  align-content: left;
+}
+
+/*Style logo color*/
+.logo {
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: bolder;
+  color: #C18D06;
+  padding: 10px;
+  border: solid 2px rgba(255, 255, 255, 0.2);
+  font-family: 'Lato', sans-serif;
+}
+
+/*Change the color of the logo when hover */
+.logo:hover, .logo:focus {
+  text-decoration: none;
+  color: white;
+}
+.logo span:hover,  .logo span:focus {
+  text-decoration: none;
+  color: #C18D06;
+}
+.logo span{
+  color: white;
+}
+
+
+.book-card{
+    width: 170px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+    padding: 5px;
+    padding-bottom: 15px;
+    vertical-align: top;
+    
+    border: 1px solid #b7b7b7;
+  }
+  
+  .book-card__image{
+    width: 100%;
+    height: 170px;
+  }
+  
+  .book-card__image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .book-title{
+    margin: 0;
+    padding: 15px;
+  }
+  
+  .book-copy{
+    margin: 0;
+    padding: 0 15px;
+    font-size: 11px;
+    color: #b7b7b7;
+  }
+  
+  .book-link{
+    margin-left: 15px;
+    margin-top: 15px;
+    display: inline-block;
+    text-decoration: none;
+    border: 2px solid #b7b7b7;
+    padding: 3px 12px;
+    color: #b7b7b7;
+    border-radius:5px;
+  }
+
+.container{
+    margin: 1%;
+}
+
+.form{
+    width: 100% !important;
+    height: 100%;
+}

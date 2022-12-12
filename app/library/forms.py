@@ -5,8 +5,8 @@ from django.forms import ModelForm
 from .models import Utilisateur, Livre, Librairie, Message, Groupe
 
 ROLE = (
-    ('libraire', 'ROLE_LIBRRAIRE'),
-    ('client', 'ROLE_CLIENT')
+    ('libraire', 'Libraire'),
+    ('client', 'Client')
 )
 
 

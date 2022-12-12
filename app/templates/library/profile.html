@@ -3,11 +3,12 @@
 {% load static %}
 
 
-{% block style %}<link rel="stylesheet" href="{% static 'styles/profile.css' %}"></link> {% endblock style %}
-    {% block page_title  %}Profile{% endblock  %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'styles/profile.css' %}"></link> {% endblock style %}
+{% block page_title %}Profile{% endblock %}
 
 
-    {% block content %}
+{% block content %}
 
     <div class="container">
         <div class="row gutters">
@@ -19,12 +20,13 @@
                                 <div class="user-avatar">
                                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Maxwell Admin">
                                 </div>
-                                <h5 class="user-name">{{user.first_name}} {{user.last_name}}</h5>
-                                <h6 class="user-email">{{user.email}}</h6>
+                                <h5 class="user-name">{{ user.first_name }} {{ user.last_name }}</h5>
+                                <h6 class="user-email">{{ user.email }}</h6>
                             </div>
                             <div class="about">
                                 <h5 class="mb-2 text-primary">About</h5>
-                                <p>I'm Othmane. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
+                                <p>I'm {{ user.first_name }}, a full Stack Designer. I enjoy creating user-centric,
+                                    delightful and human experiences.</p>
                             </div>
                         </div>
                     </div>
@@ -40,32 +42,37 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="fullName">First Name</label>
-                                    <input type="text" class="form-control" id="fullName" placeholder="Enter First name" value="{{user.first_name}}">
+                                    <input type="text" class="form-control" id="fullName" placeholder="Enter First name"
+                                           value="{{ user.first_name }}">
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="fullName">Last Name</label>
-                                    <input type="text" class="form-control" id="fullName" placeholder="Enter Last name" value="{{user.last_name}}">
+                                    <input type="text" class="form-control" id="fullName" placeholder="Enter Last name"
+                                           value="{{ user.last_name }}">
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="fullName">User Name</label>
-                                    <input type="text" class="form-control" id="fullName" placeholder="Enter User name" value="{{user.username}}">
+                                    <input type="text" class="form-control" id="fullName" placeholder="Enter User name"
+                                           value="{{ user.username }}">
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="eMail">Email</label>
-                                    <input type="email" class="form-control" id="eMail" placeholder="Enter email ID" value="{{user.email}}">
+                                    <input type="email" class="form-control" id="eMail" placeholder="Enter email ID"
+                                           value="{{ user.email }}">
                                 </div>
                             </div>
-                            
+
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="phone">Phone</label>
-                                    <input type="text" class="form-control" id="phone" placeholder="Enter phone number" value="{{user.numero_telephone}}">
+                                    <input type="text" class="form-control" id="phone" placeholder="Enter phone number"
+                                           value="{{ user.numero_telephone }}">
                                 </div>
                             </div>
 
@@ -73,22 +80,24 @@
                                 <div class="form-group">
                                     <label for="Street">Street</label>
                                     {% if user.street %}
-                                        <input type="name" class="form-control" id="Street" placeholder="Enter Street" value="{{user.street}}">
+                                        <input type="name" class="form-control" id="Street" placeholder="Enter Street"
+                                               value="{{ user.street }}">
                                     {% else %}
-                                        <input type="name" class="form-control" id="Street" placeholder="Enter Street" >
+                                        <input type="name" class="form-control" id="Street" placeholder="Enter Street">
                                     {% endif %}
-                                   
+
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="ciTy">City</label>
                                     {% if  user.ville %}
-                                    <input type="name" class="form-control" id="ciTy" placeholder="Enter City" value="{{user.ville}}">
+                                        <input type="name" class="form-control" id="ciTy" placeholder="Enter City"
+                                               value="{{ user.ville }}">
                                     {% else %}
-                                    <input type="name" class="form-control" id="ciTy" placeholder="Enter City" >
+                                        <input type="name" class="form-control" id="ciTy" placeholder="Enter City">
                                     {% endif %}
-                                   
+
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -96,20 +105,23 @@
                                     <label for="zIp">Zip Code</label>
 
                                     {% if user.zip_code %}
-                                    <input type="text" class="form-control" id="zIp" placeholder="Zip Code" value="{{user.zip_code}}">
+                                        <input type="text" class="form-control" id="zIp" placeholder="Zip Code"
+                                               value="{{ user.zip_code }}">
                                     {% else %}
-                                    <input type="text" class="form-control" id="zIp" placeholder="Zip Code" >
+                                        <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
                                     {% endif %}
 
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
+
                         <div class="row gutters mt-5 w-100">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-flex flex-row-reverse">
                                 <div>
-                                    <button type="button" id="submit" name="submit" class="btn btn-primary w-100">Update</button>
+                                    <button type="button" id="submit" name="submit" class="btn btn-primary w-100">
+                                        Update
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +129,7 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 
-  {% endblock content %}
+{% endblock content %}
 

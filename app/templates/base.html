@@ -38,10 +38,12 @@
 
                         <li><a href="{% url 'all_libraries' %}">Librairies</a></li>
                         <li><a href="{% url 'all_groupes' %}">Lectures</a></li>
-                        {% if user and user.role == "libraire" %}
-                            <li><a href="{% url 'all_emprunts' %}">Emprunts</a></li>
+                        {% if user.is_authenticated %}
+                            {% if user.role == "libraire" %}
+                                <li><a href="{% url 'all_emprunts' %}">Emprunts</a></li>
+                            {% endif %}
+                            <li><a href="{% url 'profile' user.username %}">Profile</a></li>
                         {% endif %}
-                        <li><a>Profile</a></li>
 
                         {% if not user.is_authenticated %}
                             <li class="lgn"><a class="lgn" href="{% url 'signup' %}">Login / Register</a></li>

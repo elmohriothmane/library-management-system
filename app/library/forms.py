@@ -118,3 +118,5 @@ class GroupeForm(ModelForm):
     class Meta:
         model = Groupe
         fields = ('livre', 'date', 'nb_participants_max',)
+
+

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Librairie, Livre, Emprunt,Utilisateur, Message, Groupe, Utilisateur
 from .forms import SignUpForm, LivreForm, MessageForm, GroupeForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -378,3 +378,18 @@ def inscription_groupe(request, groupe_id):
         groupe.users += str(user.id) + ";"
         groupe.save()
         return HttpResponseRedirect("/lectures/" + str(groupe.id) + "")
+
+
+
+@login_required
+def edit_comment(request, message_id):
+    comment = get_object_or_404(Message, pk=message_id)
+    book_id = comment.livre.id
+    if request.method == 'POST':
+        comment.contenu = request.POST['content-msg']
+        comment.save()
+        print(comment)
+        return HttpResponseRedirect("/livres/" + str(book_id) + "/")
+        
+    return HttpResponseRedirect("/livres/" + str(book_id) + "/")
+

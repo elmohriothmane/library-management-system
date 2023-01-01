@@ -55,23 +55,55 @@
         <div class="card text-start w-50 mt-3">
             <div class="card-header">
                 <h5 class="card-title">{{ commentaire.user.username }} - {{ commentaire.user.email }}</h5>
-            </div>
-            <div class="card-body">
-                <p class="card-text">{{ commentaire.contenu }}</p>
-                <p class="card-text"><small class="text-muted">Posté le
-                    {{ commentaire.date|date:"d/m/Y à h:m:s" }}</small></p>
-            </div>
-        </div>
-    {% endfor %}
+                {% if commentaire.user == user %}
+                  <form  class="float-right">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link text-danger"
+                            onclick="return confirm('Êtes-vous sûrs de vouloir supprimer ce commentaire ?')">Supprimer</button>
+                  </form>
+                  <button class="btn btn-link text-primary" data-toggle="modal" data-target="#modal-edit-{{ commentaire.id }}">Modifier</button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="modal-edit-{{ commentaire.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Modifier le commentaire</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <form action="{% url 'edit_comment' commentaire.id %}" method="POST">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                              <textarea name="content-msg" id="content-msg" cols="30" rows="3" style="width: 700px"
+                                        class="form-control">{{ commentaire.contenu }}</textarea>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-primary">Modifier</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ commentaire.contenu }}</p>
+<p class="card-text"><small class="text-muted">Posté le
+  {{ commentaire.date|date:"d/m/Y à h:m:s" }}</small></p>
+</div>
+</div>
+{% endfor %}
 
-    {% if user.is_authenticated %}
-        <form action="{% url 'new_message' livre.id %}" method="POST" class="text-start mt-5">
-            {% csrf_token %}
-            <div>
-            <textarea name="content-msg" id="content-msg" cols="30" rows="3" style="width: 700px"
-                      placeholder="Nouveau commentaire..." class="form-control"></textarea>
-            </div>
-            <input type="submit" value="Publier" class="btn btn-primary mt-2">
-        </form>
-    {% endif %}
+{% if user.is_authenticated %}
+<form action="{% url 'new_message' livre.id %}" method="POST" class="text-start mt-5">
+  {% csrf_token %}
+  <div>
+  <textarea name="content-msg" id="content-msg" cols="30" rows="3" style="width: 700px"
+            placeholder="Nouveau commentaire..." class="form-control"></textarea>
+  </div>
+  <input type="submit" value="Publier" class="btn btn-primary mt-2">
+</form>
+{% endif %}
 {% endblock %}

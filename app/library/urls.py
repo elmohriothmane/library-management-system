@@ -30,6 +30,7 @@ urlpatterns = [
 
     path('livres/<int:livre_id>/nouveau-commentaire', views.new_message, name='new_message'),
     path('livres/<int:message_id>/edit-commentaire', views.edit_comment, name='edit_comment'),
+    path('livres/<int:message_id>/delete-commentaire', views.delete_comment, name='delete_comment'),
     path('lectures/<int:groupe_id>/nouveau-commentaire', views.new_message_groupe, name='new_message_groupe'),
 
     path('lectures/', views.all_groupes, name='all_groupes'),

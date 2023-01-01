@@ -393,3 +393,11 @@ def edit_comment(request, message_id):
         
     return HttpResponseRedirect("/livres/" + str(book_id) + "/")
 
+def delete_comment(request, message_id):
+    message = get_object_or_404(Message, pk=message_id)
+    book_id = message.livre.id
+    if request.method == 'POST':
+        message.delete()
+        return HttpResponseRedirect("/livres/" + str(book_id) + "/")
+
+    return  HttpResponseRedirect("/livres/" + str(book_id) + "/")

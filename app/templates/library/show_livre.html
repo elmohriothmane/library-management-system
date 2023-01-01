@@ -56,7 +56,7 @@
             <div class="card-header">
                 <h5 class="card-title">{{ commentaire.user.username }} - {{ commentaire.user.email }}</h5>
                 {% if commentaire.user == user %}
-                  <form  class="float-right">
+                  <form action="{% url 'delete_comment' commentaire.id %}" method="POST" class="float-right">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-link text-danger"
                             onclick="return confirm('Êtes-vous sûrs de vouloir supprimer ce commentaire ?')">Supprimer</button>

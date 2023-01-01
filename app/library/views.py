@@ -32,11 +32,22 @@ def index(request):
     return render(request, 'index.html')
 
 def search(request):
-    search_query=request.GET.get('search-query')
+    search_by = request.GET.get('search_by')
+    search_query = request.GET.get('search-query')
+    livres_list = []
+    if search_by == 'nom':
+        # Perform search by Livre nom or auteur
+        livres_list = Livre.objects.filter(Q(nom__icontains=search_query) | Q(auteur__icontains=search_query)| Q(genre__icontains=search_query))
+    elif search_by == 'adresse':
+        # Perform search by ville, code postal, or adresse
+        librairies = Librairie.objects.filter(Q(ville__icontains=search_query) | Q(code_postal__icontains=search_query) | Q(adresse__icontains=search_query))
+        livres_list = Livre.objects.filter(librairie__in=librairies)
 
-    
-    livres_list=Livre.objects.filter(Q(nom__icontains=search_query) | Q(genre__icontains=search_query))
-    return render(request,'index.html',{'livres_list':livres_list})
+
+    print(livres_list)
+    context = {'livres_list': livres_list}
+
+    return render(request,'index.html',context)
 
 
 def all_libraries(request):

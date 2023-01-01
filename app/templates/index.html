@@ -38,6 +38,11 @@
                     <form action="/search/" method="GET">
                         <div class="input-group">
 
+                            <select class="my-select" name="search_by">
+                                <option value="" disabled selected>Search a book by</option>
+                                <option value="nom">nome de livre ou nom de l'auteur</option>
+                                <option value="adresse">Adresse </option>
+                              </select>
                             <input type="text" name="search-query" class="form-control" placeholder="Search Book">
                             <div class="input-group-append">
                                 <button class="btn btn-secondary" type="submit">
